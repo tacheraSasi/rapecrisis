@@ -11,3 +11,4 @@ pataMsaada.addEventListener("click",()=>{
     window.location.href = "pata-msaada"
     console.log("clicked")
 })
+
