@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uchunguzi wa Waathirika</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        .question {
+            display: none;
+            margin-bottom: 20px;
+        }
+
+        .question.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        label {
+            display: block;
+            margin: 10px 0;
+            font-weight: bold;
+            color: #555;
+        }
+
+        input[type="radio"], input[type="date"], select {
+            margin-right: 10px;
+        }
+
+        select, input[type="date"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        #results {
+            margin-top: 20px;
+        }
+
+        #results ul {
+            padding-left: 20px;
+        }
+
+        .progress-bar {
+            height: 20px;
+            background-color: #007bff;
+            width: 0;
+            border-radius: 4px;
+            transition: width 0.3s;
+        }
+
+        .progress-container {
+            width: 100%;
+            background-color: #e0e0e0;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .progress-step {
+            position: absolute;
+            top: -30px;
+            width: 20px;
+            height: 20px;
+            background-color: #007bff;
+            border-radius: 50%;
+            color: white;
+            text-align: center;
+            line-height: 20px;
+            font-size: 12px;
+        }
+
+        .progress-step.active {
+            background-color: #0056b3;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .validation-message {
+            color: red;
+            font-size: 14px;
+            margin-top: 10px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Uchunguzi wa Waathirika wa Ukatili wa Kijinsia</h1>
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+        <form id="questionnaire">
+            <div class="question active" id="question1-container">
+                <label>1. Je, tukio lilitokea kwako au kwa mtu unayemjua?</label>
+                <label><input type="radio" name="question1" value="Mimi" required> Mimi</label>
+                <label><input type="radio" name="question1" value="Mtu ninayemjua"> Mtu ninayemjua</label>
+                <div class="validation-message" id="validation-message-1">Tafadhali jibu swali hili.</div>
+            </div>
+            
+            <div class="question" id="question2-container">
+                <label>2. Tukio lilitokea lini?</label>
+                <input type="date" id="question2" required>
+                <div class="validation-message" id="validation-message-2">Tafadhali jibu swali hili.</div>
+            </div>
+            
+            <div class="question" id="question3-container">
+                <label>3. Je, unahitaji ushauri wa kisaikolojia?</label>
+                <label><input type="radio" name="question3" value="Ndiyo" required> Ndiyo</label>
+                <label><input type="radio" name="question3" value="Hapana"> Hapana</label>
+                <div class="validation-message" id="validation-message-3">Tafadhali jibu swali hili.</div>
+            </div>
+
+            <div class="question" id="question4-container">
+                <label>4. Je, tukio liliripotiwa kwa mamlaka?</label>
+                <label><input type="radio" name="question4" value="Ndiyo" required> Ndiyo</label>
+                <label><input type="radio" name="question4" value="Hapana"> Hapana</label>
+                <div class="validation-message" id="validation-message-4">Tafadhali jibu swali hili.</div>
+            </div>
+            
+            <div class="question" id="question5-container">
+                <label>5. Je, unajua mshukiwa?</label>
+                <label><input type="radio" name="question5" value="Ndiyo" required> Ndiyo</label>
+                <label><input type="radio" name="question5" value="Hapana"> Hapana</label>
+                <div class="validation-message" id="validation-message-5">Tafadhali jibu swali hili.</div>
+            </div>
+
+            <div class="nav-buttons">
+                <button type="button" id="prevBtn" onclick="navigate(-1)" class="hidden">Rudi</button>
+                <button type="button" id="nextBtn" onclick="navigate(1)">Endelea</button>
+            </div>
+        </form>
+        <div id="results" class="hidden">
+            <h2>Matokeo ya Uchunguzi</h2>
+            <ul id="resultsList"></ul>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+    showQuestion(currentQuestion);
+});
+
+const responses = {};
+let currentQuestion = 0;
+
+function showQuestion(index) {
+    const questions = document.querySelectorAll('.question');
+    const progressBar = document.getElementById('progressBar');
+    const steps = document.querySelectorAll('.progress-step');
+
+    questions.forEach((question, i) => {
+        question.classList.toggle('active', i === index);
+    });
+
+    steps.forEach((step, i) => {
+        step.classList.toggle('active', i <= index);
+        step.style.left = `calc(${(i + 1) / questions.length * 100}% - 10px)`;
+    });
+
+    document.getElementById('prevBtn').classList.toggle('hidden', index === 0);
+    document.getElementById('nextBtn').textContent = index === questions.length - 1 ? 'Maliza' : 'Endelea';
+    progressBar.style.width = ((index + 1) / questions.length) * 100 + '%';
+
+    hideValidationMessages();
+}
+
+function navigate(direction) {
+    const questions = document.querySelectorAll('.question');
+
+    if (direction === 1 && !validateAnswer(currentQuestion)) {
+        showValidationMessage(currentQuestion);
+        return;
+    }
+
+    currentQuestion += direction;
+
+    if (currentQuestion >= questions.length) {
+        displayResults();
+        return;
+    }
+
+    showQuestion(currentQuestion);
+}
+
+function validateAnswer(index) {
+    const question = document.querySelectorAll('.question')[index];
+    const input = question.querySelector('input:checked, input[type="date"]');
+    return !!input;
+}
+
+function showValidationMessage(index) {
+    document.getElementById(`validation-message-${index + 1}`).style.display = 'block';
+}
+
+function hideValidationMessages() {
+    document.querySelectorAll('.validation-message').forEach(message => {
+        message.style.display = 'none';
+    });
+}
+
+function displayResults() {
+    const resultsContainer = document.getElementById('results');
+    const resultsList = document.getElementById('resultsList');
+
+    responses.question1 = document.querySelector('input[name="question1"]:checked').value;
+    responses.question2 = document.getElementById('question2').value;
+    responses.question3 = document.querySelector('input[name="question3"]:checked').value;
+    responses.question4 = document.querySelector('input[name="question4"]:checked').value;
+    responses.question5 = document.querySelector('input[name="question5"]:checked').value;
+
+    resultsList.innerHTML = `
+        <li>1. Je, tukio lilitokea kwako au kwa mtu unayemjua? ${responses.question1}</li>
+        <li>2. Tukio lilitokea lini? ${responses.question2}</li>
+        <li>3. Je, unahitaji ushauri wa kisaikolojia? ${responses.question3}</li>
+        <li>4. Je, tukio liliripotiwa kwa mamlaka? ${responses.question4}</li>
+        <li>5. Je, unajua mshukiwa? ${responses.question5}</li>
+    `;
+
+    document.getElementById('questionnaire').classList.add('hidden');
+    resultsContainer.classList.remove('hidden');
+}
+
+    </script>
