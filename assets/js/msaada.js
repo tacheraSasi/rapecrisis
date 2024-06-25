@@ -1,11 +1,11 @@
 const responses = {};
-        let currentQuestion = 0;
+let currentQuestion = 0;
 
 document.addEventListener('DOMContentLoaded', () => {
     showQuestion(currentQuestion);
 
     document.querySelectorAll('input[type="radio"]').forEach(input => {
-        input.addEventListener('change', () => navigate(1));
+        input.addEventListener('click', () => navigate(1));
     });
 
     document.querySelector('input[type="date"]').addEventListener('change', () => navigate(1));
@@ -68,11 +68,11 @@ function displayResults() {
     responses.question4 = document.querySelector('input[name="question4"]:checked').value;
     responses.question5 = document.querySelector('input[name="question5"]:checked').value;
     resultsList.innerHTML = `
-        <li>1. Je, tukio lilitokea kwako au kwa mtu unayemjua? ${responses.question1}</li>
-        <li>2. Tukio lilitokea lini? ${responses.question2}</li>
-        <li>3. Je, unahitaji ushauri wa kisaikolojia? ${responses.question3}</li>
-        <li>4. Je, tukio liliripotiwa kwa mamlaka? ${responses.question4}</li>
-        <li>5. Je, unajua mshukiwa? ${responses.question5}</li>
+        <li>1. Je, tukio lilitokea kwako au kwa mtu unayemjua?<span style="display:inline"><b>${responses.question1}</b></span></li>
+        <li>2. Tukio lilitokea lini?<span style="display:inline"><b>${responses.question2}</b></span></li>
+        <li>3. Je, unahitaji ushauri wa kisaikolojia?<span style="display:inline"><b>${responses.question3}</b></span></li>
+        <li>4. Je, tukio liliripotiwa kwa mamlaka?<span style="display:inline"><b>${responses.question4}</b></span></li>
+        <li>5. Je, unajua mshukiwa?<span style="display:inline"><b>${responses.question5}</b></span></li>
     `;
     console.log(responses)
     document.getElementById('questionnaire').classList.add('hidden');

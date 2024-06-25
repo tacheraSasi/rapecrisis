@@ -31,39 +31,39 @@
 </head>
 
 <body class="service-details-page">
-    <header id="header" class="header d-flex align-items-center fixed-top">
-        <div class="container-fluid container-xl position-relative d-flex align-items-center">
-      
-          <a href="index.html" class="logo d-flex align-items-center me-auto">
-            <!-- <img src="assets/img/logo.png" alt="Rape Crisis Tanzania Logo"> -->
-            <h1 class="sitename">RapeCrisis tz</h1>
-          </a>
-      
-          <nav id="navmenu" class="navmenu">
+  <header id="header" class="header d-flex align-items-center fixed-top">
+    <div class="container-fluid container-xl position-relative d-flex align-items-center">
+  
+      <a href="index.html" class="logo d-flex align-items-center me-auto">
+        <!-- <img src="assets/img/logo.png" alt="Rape Crisis Tanzania Logo"> -->
+        <h1 class="sitename">RapeCrisis tz</h1>
+      </a>
+  
+      <nav id="navmenu" class="navmenu">
+        <ul>
+          <li><a href="../" class="active">Nyumbani</a></li>
+          <li><a href="../#about">Kuhusu Sisi</a></li>
+          <li><a href="index.html#volunteer">Mchango</a></li>
+          <li><a href="index.html#donate">Toa Msaada</a></li>
+          <li class="dropdown">
+            <a href="#"><span>Pata Msaada</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
             <ul>
-              <li><a href="index.html#home" class="active">Home</a></li>
-              <li><a href="index.html#about">About Us</a></li>
-              <li><a href="index.html#volunteer">Volunteer</a></li>
-              <li><a href="index.html#donate">Donate</a></li>
-              <li class="dropdown">
-                <a href="#"><span>Get Help</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-                <ul>
-                  <li><a href="#">Emergency Services</a></li>
-                  <li><a href="#">Counselling</a></li>
-                  <li><a href="#">Legal Support</a></li>
-                  <li><a href="#">Shelter</a></li>
-                </ul>
-              </li>
-              <li><a href="index.html#contact">Contact Us</a></li>
+              <li><a href="#">Huduma za Dharura</a></li>
+              <li><a href="#">Usaidizi wa Kisaikolojia</a></li>
+              <li><a href="#">Usaidizi wa Kisheria</a></li>
+              <li><a href="#">Makazi Salama</a></li>
             </ul>
-            <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-          </nav>
-      
-          <a class="btn-getstarted" href="index.html#volunteer">Pata msaada</a>
-      
-        </div>
-    </header>
-      
+          </li>
+          <li><a href="index.html#contact">Wasiliana Nasi</a></li>
+        </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+  
+      <a class="btn-getstarted" href="index.html#volunteer">Pata Msaada</a>
+  
+    </div>
+  </header>
+     
   <main class="main">
 
     <!--  Details Section -->
@@ -83,8 +83,8 @@
                 <form id="questionnaire">
                     <div class="question active" id="question1-container">
                         <label>1. Je, tukio lilitokea kwako au kwa mtu unayemjua?</label>
-                        <label><input type="radio" name="question1" value="Mimi" > Mimi</label>
-                        <label><input type="radio" name="question1" value="Mtu ninayemjua"> Mtu ninayemjua</label>
+                        <label id="label-qn"><input type="radio" name="question1" value="Mimi" > Mimi</label>
+                        <label id="label-qn"><input type="radio" name="question1" value="Mtu ninayemjua"> Mtu ninayemjua</label>
                         <div class="validation-message" id="validation-message-1">Tafadhali jibu swali hili.</div>
                     </div>
                     
@@ -96,27 +96,27 @@
                     
                     <div class="question" id="question3-container">
                         <label>3. Je, unahitaji ushauri wa kisaikolojia?</label>
-                        <label><input type="radio" name="question3" value="Ndiyo" required> Ndiyo</label>
-                        <label><input type="radio" name="question3" value="Hapana"> Hapana</label>
+                        <label id="label-qn"><input type="radio" name="question3" value="Ndiyo" required> Ndiyo</label>
+                        <label id="label-qn"><input type="radio" name="question3" value="Hapana"> Hapana</label>
                         <div class="validation-message" id="validation-message-3">Tafadhali jibu swali hili.</div>
                     </div>
         
                     <div class="question" id="question4-container">
                         <label>4. Je, tukio liliripotiwa kwa mamlaka?</label>
-                        <label><input type="radio" name="question4" value="Ndiyo" required> Ndiyo</label>
-                        <label><input type="radio" name="question4" value="Hapana"> Hapana</label>
+                        <label id="label-qn"><input type="radio" name="question4" value="Ndiyo" required> Ndiyo</label>
+                        <label id="label-qn"><input type="radio" name="question4" value="Hapana"> Hapana</label>
                         <div class="validation-message" id="validation-message-4">Tafadhali jibu swali hili.</div>
                     </div>
                     
                     <div class="question" id="question5-container">
                         <label>5. Je, unajua mshukiwa?</label>
-                        <label><input type="radio" name="question5" value="Ndiyo" required> Ndiyo</label>
+                        <label id="label-qn"><input type="radio" name="question5" value="Ndiyo" required> Ndiyo</label>
                         <label><input type="radio" name="question5" value="Hapana"> Hapana</label>
                         <div class="validation-message" id="validation-message-5">Tafadhali jibu swali hili.</div>
                     </div>
                 </form>
                 <div id="results" class="hidden">
-                    <h2>Matokeo ya Uchunguzi</h2>
+                    <h2>Taarifa zako</h2>
                     <ul id="resultsList"></ul>
                 </div>
             </div><!-- End  List -->

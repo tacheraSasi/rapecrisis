@@ -1908,7 +1908,7 @@ section,
 --------------------------------------------------------------*/
 .service-details .service-box {
   padding: 20px;
-  box-shadow: 0px 2px 20px color-mix(in srgb, var(--default-color), transparent 88%);
+  box-shadow: 0px 5px 20px color-mix(in srgb, var(--default-color), transparent 55%);
 }
 
 .service-details .service-box+.service-box {

@@ -29,7 +29,9 @@ label {
     font-weight: bold;
     color: #555;
 }
-
+.input[type ="radio"]{
+    display: none;
+}
 input[type="radio"], input[type="date"] {
     margin-right: 10px;
 }
@@ -65,7 +67,7 @@ input[type="date"] {
 
 .progress-container {
     width: 100%;
-    background-color: #e0e0e0;
+    background-color: #cfcecf;
     border-radius: 4px;
     margin-bottom: 20px;
     position: relative;
@@ -76,4 +78,11 @@ input[type="date"] {
     font-size: 14px;
     margin-top: 10px;
     display: none;
+}
+#label-qn{
+    width: 100%;
+    padding:6px;
+    border:1px solid var(--accent-color);
+    border-radius:8px
+
 }
