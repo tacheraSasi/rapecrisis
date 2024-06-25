@@ -68,13 +68,28 @@ function displayResults() {
     responses.question4 = document.querySelector('input[name="question4"]:checked').value;
     responses.question5 = document.querySelector('input[name="question5"]:checked').value;
     resultsList.innerHTML = `
-        <li>1. Je, tukio lilitokea kwako au kwa mtu unayemjua?<span style="display:inline"><b>${responses.question1}</b></span></li>
-        <li>2. Tukio lilitokea lini?<span style="display:inline"><b>${responses.question2}</b></span></li>
-        <li>3. Je, unahitaji ushauri wa kisaikolojia?<span style="display:inline"><b>${responses.question3}</b></span></li>
-        <li>4. Je, tukio liliripotiwa kwa mamlaka?<span style="display:inline"><b>${responses.question4}</b></span></li>
-        <li>5. Je, unajua mshukiwa?<span style="display:inline"><b>${responses.question5}</b></span></li>
+        <li><i class="bi bi-check-circle"></i> Je, tukio lilitokea kwako au kwa mtu unayemjua?<br>
+          <span style="color:var(--accent-color)">${responses.question1}</span>
+        </li>
+        <li><i class="bi bi-check-circle"></i> Tukio lilitokea lini?<br>
+          <span style="color:var(--accent-color)">${responses.question2}</span>
+        </li>
+        <li><i class="bi bi-check-circle"></i> Je, unahitaji ushauri wa kisaikolojia?<br>
+          <span style="color:var(--accent-color)">${responses.question3}</span>
+        </li>
+        <li><i class="bi bi-check-circle"></i> Je, tukio liliripotiwa kwa mamlaka?<br>
+          <span style="color:var(--accent-color)">${responses.question4}</span>
+        </li>
+        <li><i class="bi bi-check-circle"></i> Je, unajua mshukiwa?<br>
+          <span style="color:var(--accent-color)">${responses.question5}</span>
+        </li>
     `;
     console.log(responses)
     document.getElementById('questionnaire').classList.add('hidden');
     resultsContainer.classList.remove('hidden');
+}
+
+function showActions() {
+
+    
 }
