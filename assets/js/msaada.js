@@ -87,9 +87,16 @@ function displayResults() {
     console.log(responses)
     document.getElementById('questionnaire').classList.add('hidden');
     resultsContainer.classList.remove('hidden');
+    setTimeout(() => {
+        showActions()
+    }, 5000);
 }
 
 function showActions() {
+    const actionContainer =document.querySelector('.action')
+    const resultsContainer = document.getElementById('results');
+    resultsContainer.classList.add('hidden')
+    actionContainer.style.display = "flex"
 
     
 }
