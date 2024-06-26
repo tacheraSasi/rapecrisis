@@ -875,6 +875,9 @@ section,
   border-radius: 10px;
   background-color: color-mix(in srgb, var(--accent-color), transparent 80%);
 }
+.text-small{
+  font-size: x-small;
+}
 .w-full{
   width: 100%;
 }

@@ -84,12 +84,14 @@ function displayResults() {
           <span style="color:var(--accent-color)">${responses.question5}</span>
         </li>
     `;
-    console.log(responses)
+    if(responses.location){
+        console.log(responses)
+    }
     document.getElementById('questionnaire').classList.add('hidden');
     resultsContainer.classList.remove('hidden');
     setTimeout(() => {
         showActions()
-    }, 5000);
+    }, 5000);//2416-YC95-PJ23
 }
 
 function showActions() {
@@ -100,3 +102,66 @@ function showActions() {
 
     
 }
+
+function getUserLocation() {
+    return new Promise((resolve, reject) => {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(resolvePosition, showError);
+        } else {
+            reject("Geolocation is not supported by this browser.");
+        }
+
+        function resolvePosition(position) {
+            const latitude = position.coords.latitude;
+            const longitude = position.coords.longitude;
+            const positionReturned = {
+                latitude,
+                longitude
+            };
+            resolve(positionReturned);
+        }
+
+        function showError(error) {
+            switch (error.code) {
+                case error.PERMISSION_DENIED:
+                    reject("User denied the request for Geolocation.");
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    reject("Location information is unavailable.");
+                    break;
+                case error.TIMEOUT:
+                    reject("The request to get user location timed out.");
+                    break;
+                case error.UNKNOWN_ERROR:
+                    reject("An unknown error occurred.");
+                    break;
+            }
+        }
+    });
+}
+
+getUserLocation()
+.then(location => {
+    console.log('Location:', location);
+    responses.location = location
+    //sending the response to a php backend
+    fetch('your-backend-url.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(responses)
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Response from backend:', data);
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+    console.log(responses)
+})
+.catch(error => {
+    console.error('Error:', error);
+    responses.location = "user denied"
+});
