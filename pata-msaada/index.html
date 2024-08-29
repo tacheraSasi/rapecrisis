@@ -9,8 +9,8 @@
   <meta content="" name="keywords">
 
   <!-- Favicons -->
-  <link href="../assets/img/favicon.png" rel="icon">
-  <link href="../assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+  <link href="../assets/img/icon.png" rel="icon">
+  <link href="../assets/img/icon.png" rel="apple-touch-icon">
 
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com" rel="preconnect">
@@ -81,7 +81,7 @@
                 <div class="progress-container">
                     <div class="progress-bar" id="progressBar"></div>
                 </div>
-                <form id="questionnaire">
+                <form id="questionnaire" method="post">
                     <div class="question active" id="question1-container">
                         <label>1. Je, tukio lilitokea kwako au kwa mtu unayemjua?</label>
                         <label id="label-qn"><input type="radio" name="question1" value="Mimi" > Mimi</label>
@@ -112,9 +112,16 @@
                     <div class="question" id="question5-container">
                         <label>5. Je, unajua mshukiwa?</label>
                         <label id="label-qn"><input type="radio" name="question5" value="Ndiyo" required> Ndiyo</label>
-                        <label><input type="radio" name="question5" value="Hapana"> Hapana</label>
+                        <label id="label-qn"><input type="radio" name="question5" value="Hapana"> Hapana</label>
                         <div class="validation-message" id="validation-message-5">Tafadhali jibu swali hili.</div>
                     </div>
+                    <!-- <div class="question" id="question6-container">
+                      <label>5. Mawasiliano Yako?</label>
+                      <input class="input-taarifa" id="jina" required type="text" placeholder="Jina Lako">
+                      <input class="input-taarifa" id="namba" required type="tel" placeholder="namba ya simu">
+                      <input class="input-taarifa" id="email" required type="email" placeholder="email">
+                      <button class="maliza" id="maliza-tuwk">Maliza</button>
+                  </div> -->
                 </form>
                 <div id="results" class="hidden">
                     <h2>Taarifa zako</h2>

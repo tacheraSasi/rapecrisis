@@ -2,6 +2,7 @@ const responses = {};
 let currentQuestion = 0;
 
 document.addEventListener('DOMContentLoaded', () => {
+    const malizaBtn = document.querySelector('#maliza-tuwk')
     showQuestion(currentQuestion);
 
     document.querySelectorAll('input[type="radio"]').forEach(input => {
@@ -9,7 +10,22 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     document.querySelector('input[type="date"]').addEventListener('change', () => navigate(1));
+
+    // malizaBtn.addEventListener("click",() => navigate(1))
 });
+// document.querySelector('#maliza-tuwk').addEventListener("click",() => {
+
+//     const jina = document.getElementById('jina').value;
+//     const namba = document.getElementById('namba').value;
+//     const email = document.getElementById('email').value;
+//     const user = {
+//         jina,
+//         namba,
+//         email
+//     }
+//     responses.user = user
+//     console.log(responses)
+// })
 
 function showQuestion(index) {
     const questions = document.querySelectorAll('.question');
@@ -21,16 +37,16 @@ function showQuestion(index) {
 
     progressBar.style.width = ((index + 1) / questions.length) * 100 + '%';
 
-    hideValidationMessages();
+    // hideValidationMessages();
 }
 
 function navigate(direction) {
     const questions = document.querySelectorAll('.question');
 
-    if (direction === 1 && !validateAnswer(currentQuestion)) {
-        showValidationMessage(currentQuestion);
-        return;
-    }
+    // if (direction === 1 && !validateAnswer(currentQuestion)) {
+    //     showValidationMessage(currentQuestion);
+    //     return;
+    // }
 
     currentQuestion += direction;
 
@@ -42,20 +58,21 @@ function navigate(direction) {
     showQuestion(currentQuestion);
 }
 
-function validateAnswer(index) {
-    const question = document.querySelectorAll('.question')[index];
-    const input = question.querySelector('input:checked, input[type="date"]');
-    return !!input;
-}
-function showValidationMessage(index) {
-    document.getElementById(`validation-message-${index + 1}`).style.display = 'block';
-}
+// function validateAnswer(index) {
+//     const question = document.querySelectorAll('.question')[index];
+//     const input = question.querySelector('input:checked, input[type="date"]');
+//     return !!input;
+// }
+// function showValidationMessage(index) {
+//     document.getElementById(`validation-message-${index + 1}`).style.display = 'block';
+// }
 
-function hideValidationMessages() {
-    document.querySelectorAll('.validation-message').forEach(message => {
-        message.style.display = 'none';
-    });
-}
+// function hideValidationMessages() {
+//     document.querySelectorAll('.validation-message').forEach(message => {
+//         message.style.display = 'none';
+//     });
+// }
+
 
 function displayResults() {
     const resultsContainer = document.getElementById('results');
@@ -95,12 +112,39 @@ function displayResults() {
 }
 
 function showActions() {
-    const actionContainer =document.querySelector('.action')
-    const resultsContainer = document.getElementById('results');
-    resultsContainer.classList.add('hidden')
-    actionContainer.style.display = "flex"
-
+        const actionContainer =document.querySelector('.action')
+        const resultsContainer = document.getElementById('results');
+        resultsContainer.classList.add('hidden')
+        actionContainer.style.display = "flex"
     
+    //sending the email
+
+    getUserLocation()
+    .then(location => {
+        console.log('Location:', location);
+        responses.location = location
+        //sending the response to a php backend
+        fetch('https://tuwk.tachera.com/email.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(responses)
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Response from backend:', data);
+        })
+        // .catch(error => {
+        //     console.error('Error:', error);
+        // });
+        console.log(responses)
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        responses.location = "user denied"
+    });
+
 }
 
 function getUserLocation() {
@@ -139,29 +183,3 @@ function getUserLocation() {
         }
     });
 }
-
-getUserLocation()
-.then(location => {
-    console.log('Location:', location);
-    responses.location = location
-    //sending the response to a php backend
-    fetch('your-backend-url.php', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(responses)
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log('Response from backend:', data);
-    })
-    .catch(error => {
-        console.error('Error:', error);
-    });
-    console.log(responses)
-})
-.catch(error => {
-    console.error('Error:', error);
-    responses.location = "user denied"
-});
