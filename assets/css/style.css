@@ -130,3 +130,102 @@ input[type="date"] {
     margin-right:1rem;
 }
 
+/* Section Container Styling */
+.section-title {
+    margin: 20px 0;
+}
+
+.report-container {
+    width: 100%;
+    padding: 2rem;
+    text-align: left;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+}
+
+/* Report Box Styling */
+.report {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    padding: 20px;
+    margin-top: 20px;
+}
+
+/* Time Reported Styling */
+.time-reported {
+    font-size: 0.9rem;
+    color: #555;
+    margin-bottom: 15px;
+}
+
+/* Report List Styling */
+.report-list {
+    list-style-type: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+/* Individual Report Item Styling */
+.report-list li {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 15px;
+    font-size: 1rem;
+    color: #333;
+}
+
+.report-list li i {
+    color: var(--accent-color);
+    margin-right: 10px;
+    font-size: 1.2rem;
+    
+}
+.report-top{
+    display: flex;
+    gap: 2rem;
+}
+.icon{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px var(--accent-color) solid;
+    border-radius: 50%;
+    margin:auto;
+    padding:6px
+}
+
+/* Report Item Content Styling */
+.report-item-content {
+    flex-grow: 1;
+}
+
+.report-item-content span {
+    display: inline-block;
+}
+
+.report-list .response {
+    color: var(--accent-color);
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+
+/* Responsive Styling */
+@media (max-width: 768px) {
+    .report-container {
+        padding: 1rem;
+    }
+
+    .report {
+        padding: 15px;
+    }
+
+    .report-list li {
+        font-size: 0.9rem;
+    }
+
+    .report-list li i {
+        font-size: 1rem;
+    }
+}
