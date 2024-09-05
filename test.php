@@ -1,14 +1,42 @@
 <?php
-require_once './parseEnv.php';
-// Usage Example
-try {
-    parseEnv(__DIR__ . '/.env');
+require 'vendor/autoload.php';
 
-    $databaseUrl = getenv('TEST');
-    $apiKey = getenv('OPENAI_API_KEY');
+use Ramsey\Uuid\Uuid;
 
-    echo "TEST Value: " . ($databaseUrl !== false ? $databaseUrl : "Not set") . PHP_EOL;
-    echo "OPENAI_API_KEY: " . ($apiKey !== false ? $apiKey : "Not set") . PHP_EOL;
-} catch (Exception $e) {
-    echo "Error: " . $e->getMessage();
+$uuid = Uuid::uuid4()->toString();
+echo $uuid; // This will print a unique UUID
+echo "<br>";
+echo md5("kusaga-2024");
+function getUserIP() {
+    $ipaddress = '';
+    if (isset($_SERVER['HTTP_CLIENT_IP']))
+        $ipaddress = $_SERVER['HTTP_CLIENT_IP'];
+    else if(isset($_SERVER['HTTP_X_FORWARDED_FOR']))
+        $ipaddress = $_SERVER['HTTP_X_FORWARDED_FOR'];
+    else if(isset($_SERVER['HTTP_X_FORWARDED']))
+        $ipaddress = $_SERVER['HTTP_X_FORWARDED'];
+    else if(isset($_SERVER['HTTP_FORWARDED_FOR']))
+        $ipaddress = $_SERVER['HTTP_FORWARDED_FOR'];
+    else if(isset($_SERVER['HTTP_FORWARDED']))
+        $ipaddress = $_SERVER['HTTP_FORWARDED'];
+    else if(isset($_SERVER['REMOTE_ADDR']))
+        $ipaddress = $_SERVER['REMOTE_ADDR'];
+    else
+        $ipaddress = 'UNKNOWN';
+    return $ipaddress;
 }
+
+$user_ip = getUserIP();
+echo $user_ip;
+
+$ip = getUserIP();
+$location = file_get_contents("http://ipinfo.io/{$ip}/json");
+$locationData = json_decode($location, true);
+
+// Example of accessing location data
+$city = $locationData['city'];
+$region = $locationData['region'];
+$country = $locationData['country'];
+
+echo "City: $city, Region: $region, Country: $country";
+

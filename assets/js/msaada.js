@@ -11,21 +11,66 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.querySelector('input[type="date"]').addEventListener('change', () => navigate(1));
 
-    // malizaBtn.addEventListener("click",() => navigate(1))
+    malizaBtn.addEventListener("click",() => navigate(1))
 });
-// document.querySelector('#maliza-tuwk').addEventListener("click",() => {
+//submitting the form
+document.querySelector('#maliza-tuwk').addEventListener("click",(e) => {
+    e.preventDefault()
 
-//     const jina = document.getElementById('jina').value;
-//     const namba = document.getElementById('namba').value;
-//     const email = document.getElementById('email').value;
-//     const user = {
-//         jina,
-//         namba,
-//         email
-//     }
-//     responses.user = user
-//     console.log(responses)
-// })
+    //sending the email
+
+    getUserLocation()
+    .then(location => {
+        console.log('Location:', location);
+        document.getElementById('latitude').value = location.latitude;
+        document.getElementById('longitude').value = location.longitude;
+
+        // Now submiting the form using AJAX
+        submitForm();
+        responses.location = location
+
+        //sending the response to a php backend to send an email notification
+        fetch('https://tuwk.tachera.com/email.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(responses)
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Response from backend:', data);
+        })
+        // .catch(error => {
+        //     console.error('Error:', error);
+        // });
+        console.log(responses)
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        responses.location = "user denied"
+    });
+
+})
+
+function submitForm() {
+    const form = document.getElementById('questionnaire');
+    const formData = new FormData(form);
+
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", "../server/add.php", true);
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+            console.log(xhr.responseText); 
+            alert('Report submitted successfully');
+        }else{
+            if(alert("Something went wrong. make sure you allow geolocation")){
+                window.location.reload()
+            }
+        }
+    };
+    xhr.send(formData);
+}
 
 function showQuestion(index) {
     const questions = document.querySelectorAll('.question');
@@ -117,33 +162,7 @@ function showActions() {
         resultsContainer.classList.add('hidden')
         actionContainer.style.display = "flex"
     
-    //sending the email
-
-    getUserLocation()
-    .then(location => {
-        console.log('Location:', location);
-        responses.location = location
-        //sending the response to a php backend
-        fetch('https://tuwk.tachera.com/email.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(responses)
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Response from backend:', data);
-        })
-        // .catch(error => {
-        //     console.error('Error:', error);
-        // });
-        console.log(responses)
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        responses.location = "user denied"
-    });
+    
 
 }
 
@@ -159,8 +178,8 @@ function getUserLocation() {
             const latitude = position.coords.latitude;
             const longitude = position.coords.longitude;
             const positionReturned = {
-                latitude,
-                longitude
+                latitude:latitude,
+                longitude:longitude
             };
             resolve(positionReturned);
         }

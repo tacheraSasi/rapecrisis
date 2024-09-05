@@ -82,47 +82,52 @@
                     <div class="progress-bar" id="progressBar"></div>
                 </div>
                 <form id="questionnaire" method="post">
-                    <div class="question active" id="question1-container">
-                        <label>1. Je, tukio lilitokea kwako au kwa mtu unayemjua?</label>
-                        <label id="label-qn"><input type="radio" name="question1" value="Mimi" > Mimi</label>
-                        <label id="label-qn"><input type="radio" name="question1" value="Mtu ninayemjua"> Mtu ninayemjua</label>
-                        <div class="validation-message" id="validation-message-1">Tafadhali jibu swali hili.</div>
-                    </div>
-                    
-                    <div class="question" id="question2-container">
-                        <label>2. Tukio lilitokea lini?</label>
-                        <input type="date" id="question2" required>
-                        <div class="validation-message" id="validation-message-2">Tafadhali jibu swali hili.</div>
-                    </div>
-                    
-                    <div class="question" id="question3-container">
-                        <label>3. Je, unahitaji ushauri wa kisaikolojia?</label>
-                        <label id="label-qn"><input type="radio" name="question3" value="Ndiyo" required> Ndiyo</label>
-                        <label id="label-qn"><input type="radio" name="question3" value="Hapana"> Hapana</label>
-                        <div class="validation-message" id="validation-message-3">Tafadhali jibu swali hili.</div>
-                    </div>
-        
-                    <div class="question" id="question4-container">
-                        <label>4. Je, tukio liliripotiwa kwa mamlaka?</label>
-                        <label id="label-qn"><input type="radio" name="question4" value="Ndiyo" required> Ndiyo</label>
-                        <label id="label-qn"><input type="radio" name="question4" value="Hapana"> Hapana</label>
-                        <div class="validation-message" id="validation-message-4">Tafadhali jibu swali hili.</div>
-                    </div>
-                    
-                    <div class="question" id="question5-container">
-                        <label>5. Je, unajua mshukiwa?</label>
-                        <label id="label-qn"><input type="radio" name="question5" value="Ndiyo" required> Ndiyo</label>
-                        <label id="label-qn"><input type="radio" name="question5" value="Hapana"> Hapana</label>
-                        <div class="validation-message" id="validation-message-5">Tafadhali jibu swali hili.</div>
-                    </div>
-                    <!-- <div class="question" id="question6-container">
-                      <label>5. Mawasiliano Yako?</label>
-                      <input class="input-taarifa" id="jina" required type="text" placeholder="Jina Lako">
-                      <input class="input-taarifa" id="namba" required type="tel" placeholder="namba ya simu">
-                      <input class="input-taarifa" id="email" required type="email" placeholder="email">
-                      <button class="maliza" id="maliza-tuwk">Maliza</button>
-                  </div> -->
+                  <div class="question active" id="question1-container">
+                      <label>1. Je, tukio lilitokea kwako au kwa mtu unayemjua?</label>
+                      <label id="label-qn"><input type="radio" name="question1" value="Mimi" required> Mimi</label>
+                      <label id="label-qn"><input type="radio" name="question1" value="Mtu ninayemjua" required> Mtu ninayemjua</label>
+                      <div class="validation-message" id="validation-message-1">Tafadhali jibu swali hili.</div>
+                  </div>
+                  
+                  <div class="question" id="question2-container">
+                      <label>2. Tukio lilitokea lini?</label>
+                      <input type="date" id="question2" name="question2" required>
+                      <div class="validation-message" id="validation-message-2">Tafadhali jibu swali hili.</div>
+                  </div>
+                  
+                  <div class="question" id="question3-container">
+                      <label>3. Je, unahitaji ushauri wa kisaikolojia?</label>
+                      <label id="label-qn"><input type="radio" name="question3" value="Ndiyo" required> Ndiyo</label>
+                      <label id="label-qn"><input type="radio" name="question3" value="Hapana" required> Hapana</label>
+                      <div class="validation-message" id="validation-message-3">Tafadhali jibu swali hili.</div>
+                  </div>
+              
+                  <div class="question" id="question4-container">
+                      <label>4. Je, tukio liliripotiwa kwa mamlaka?</label>
+                      <label id="label-qn"><input type="radio" name="question4" value="Ndiyo" required> Ndiyo</label>
+                      <label id="label-qn"><input type="radio" name="question4" value="Hapana" required> Hapana</label>
+                      <div class="validation-message" id="validation-message-4">Tafadhali jibu swali hili.</div>
+                  </div> 
+                  
+                  <div class="question" id="question5-container">
+                      <label>5. Je, unajua mshukiwa?</label>
+                      <label id="label-qn"><input type="radio" name="question5" value="Ndiyo" required> Ndiyo</label>
+                      <label id="label-qn"><input type="radio" name="question5" value="Hapana" required> Hapana</label>
+                      <div class="validation-message" id="validation-message-5">Tafadhali jibu swali hili.</div>
+                  </div>
+                  
+                  <div class="question" id="question6-container">
+                      <label>6. Mawasiliano Yako?</label>
+                      <input class="input-taarifa" id="jina" name="jina" required type="text" placeholder="Jina Lako">
+                      <input class="input-taarifa" id="namba" name="namba" required type="tel" placeholder="namba ya simu">
+                      <input class="input-taarifa" id="email" name="email" required type="email" placeholder="email">
+                      <button class="maliza" id="maliza-tuwk" type="submit">Maliza</button>
+                  </div>
+                  <!-- Hidden fields for location -->
+                  <input type="hidden" id="latitude" name="latitude">
+                  <input type="hidden" id="longitude" name="longitude">
                 </form>
+              
                 <div id="results" class="hidden">
                     <h2>Taarifa zako</h2>
                     <ul id="resultsList"></ul>

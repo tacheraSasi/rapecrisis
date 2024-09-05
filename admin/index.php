@@ -1,3 +1,15 @@
+<?php 
+  session_start();
+  include "../config.php";
+
+  if(!isset($_SESSION['uid'])){
+    header("location: ./login.php");
+  }
+
+  
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -41,7 +53,7 @@
   <header id="header" class="header d-flex align-items-center fixed-top">
     <div class="container-fluid container-xl position-relative d-flex align-items-center">
   
-      <a href="index.html" class="logo d-flex align-items-center me-auto">
+      <a href="./" class="logo d-flex align-items-center me-auto">
         <img src="../assets/img/icon.png" alt="TUWK (Tokomeza Ukatili Wa Kijinsia) Tanzania Logo">
         <h1 class="sitename">TUWK  </h1>
         <!-- <span class="text-small"><b>| </b>Tokomeza Ukatili Wa Kijinsia</span> -->
@@ -87,75 +99,33 @@
     <!-- Section Title -->
     <div class="report-container" data-aos="fade-up">
       <h2>Reports</h2>
-      <div class="report">
-        <div class="time-reported">
-          <p>Reported on: <strong>September 3, 2024</strong> 
-            <i style="text-decoration: underline;">
-              <a href="">details<i class="bi bi-arrow-right-short"></i></a>
-            </i>
-          </p>
-        </div>
-        <ul class="report-list">
-          <li class="report-top">
-            <div class="d-flex">
-              <i class="bi bi-person icon"></i>
-              <div class="report-item-content">
-                <span class="response">Yuliana</span>
-              </div>
-            </div>
-            <div class="d-flex">
-              <i class="bi bi-globe icon"></i>
-              <div class="report-item-content">
-                <span class="response">
-                  latitude:3456727, longitude:34255735
-                </span>
-              </div>
-            </div>
-          </li>
-          <!-- <li>
-            <i class="bi bi-check-circle"></i>
-            <div class="report-item-content">
-              <span>Je, tukio lilitokea kwako au kwa mtu unayemjua?</span>
-              <span class="response">${responses.question1}</span>
-            </div>
-          </li>
-          <li>
-            <i class="bi bi-check-circle"></i>
-            <div class="report-item-content">
-              <span>Tukio lilitokea lini?</span>
-              <span class="response">${responses.question2}</span>
-            </div>
-          </li>
-          <li>
-            <i class="bi bi-check-circle"></i>
-            <div class="report-item-content">
-              <span>Je, unahitaji ushauri wa kisaikolojia?</span>
-              <span class="response">${responses.question3}</span>
-            </div>
-          </li>
-          <li>
-            <i class="bi bi-check-circle"></i>
-            <div class="report-item-content">
-              <span>Je, tukio liliripotiwa kwa mamlaka?</span>
-              <span class="response">${responses.question4}</span>
-            </div>
-          </li>
-          <li>
-            <i class="bi bi-check-circle"></i>
-            <div class="report-item-content">
-              <span>Je, unajua mshukiwa?</span>
-              <span class="response">${responses.question5}</span>
-            </div>
-          </li> -->
-        </ul>
-      </div>
+      <div id="reports-div"></div>
+      <script>
+        // JavaScript function to fetch insights data via AJAX
+        function fetchReports() {
+            // Make an AJAX request to get the PHP script that echoes insights content
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "php/get_reports.php", true);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    
+                    var reportsContent = xhr.responseText;
+                    console.log(reportsContent)
+                    
+                    document.getElementById("reports-div").innerHTML = reportsContent;
+                }
+            };
+            xhr.send();
+        }
+
+        // Call fetchReports() function to fetch and display insights when the page loads
+        fetchReports();
+    </script>
     </div>
     <!-- End Section Title -->
 
 
-      <div class="container" data-aos="fade-up">
-        <p>No reports yet.</p>
-      </div>
+      
 
     </section>
 

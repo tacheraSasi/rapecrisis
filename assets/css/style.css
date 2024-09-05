@@ -47,7 +47,29 @@ input[type="date"] {
     border-radius: 4px;
     box-sizing: border-box;
 }
+.input-taarifa{
+    width: 100%;
+    padding:10px;
+    margin:8px auto;
+    border-radius: 10px;
+    border:2px solid color-mix(in srgb, var(--accent-color), transparent 80%);
+    outline: none;
+    transition:ease-in-out all .6s
 
+}
+
+.input-taarifa:focus{
+    border:2px solid var(--accent-color);
+    outline:none;
+}
+.maliza{
+    width: 100%;
+    padding: 10px;
+    background-color: var(--accent-color);
+    border-radius: 8px;
+    color:white;
+    border:none
+}
 
 #results {
     margin-top: 20px;

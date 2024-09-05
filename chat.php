@@ -8,12 +8,11 @@ parseEnv(__DIR__ . '/.env');
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 
-// Retrieve environment variables
+// Retrieving environment variables
 $databaseUrl = getenv('TEST');
+print_r($databaseUrl);
 
-// Assuming you have received `prompt` and `userUniqueId` from a request body, similar to how it's done in Express.js
-// In a real-world scenario, use $_POST or $_GET based on your method
-$prompt = "HI THERE";
+$prompt = "HI i need to know why would i ever need reactjs over vanilla";
 $userUniqueId = $_POST['userUniqueId'] ?? 'default_user_id'; // Fallback to a default value if not set
 
 
