@@ -1,5 +1,5 @@
 <?php
-// Allow from any origin
+// Allow CORS for cross-origin requests
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: POST, GET, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With');
@@ -13,11 +13,11 @@ parseEnv(__DIR__ . '/.env');
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 
-// Capture user input (from the JavaScript request)
+// Capture the user's input from a JavaScript request
 $userInput = file_get_contents('php://input');
-$userInput = json_decode($userInput, true)['prompt'] ?? "Default prompt here";
+$userInput = json_decode($userInput, true)['prompt'] ?? "Default prompt here.";
 
-// Initialize session to store the conversation history
+// Start a session to maintain conversation history
 session_start();
 
 if (!isset($_SESSION['conversation'])) {
@@ -27,8 +27,9 @@ if (!isset($_SESSION['conversation'])) {
 $_SESSION['conversation'][] = ['role' => 'user', 'content' => $userInput];
 
 /**
- * Function to send a therapeutic prompt to OpenAI and engage in a chat
- *
+ * Function to communicate with OpenAI's API, representing AI therapist "Magreth."
+ * Magreth specializes in providing compassionate, professional advice to survivors of sexual assault and rape.
+ * 
  * @param array $conversation
  * @return array
  */
@@ -36,7 +37,7 @@ function openAi($conversation) {
     $client = new Client();
 
     try {
-        // Sending a POST request to the OpenAI API
+        // Send a POST request to OpenAI's API
         $response = $client->post('https://api.openai.com/v1/chat/completions', [
             'headers' => [
                 'Authorization' => 'Bearer ' . getenv('OPENAI_API_KEY'),
@@ -45,23 +46,32 @@ function openAi($conversation) {
             'json' => [
                 'messages' => array_merge(
                     [
-                        ['role' => 'system', 'content' => 'Wewe ni mtaalamu wa ushauri nasaha...'] // Your system instructions here
+                        [
+                            'role' => 'system', 
+                            'content' => 'Wewe ni "Magreth," mtaalamu wa ushauri nasaha ambaye anatoa msaada wa 
+                                        kitaalam kwa waathirika wa unyanyasaji wa kijinsia na dhuluma za kingono. 
+                                        Wewe ni wa huruma, mwelewa, na una weledi wa kushughulikia nyakati za shida kwa 
+                                        uangalifu na kwa lugha ya Kiswahili. Lengo lako ni kuwapa watumiaji msaada wa 
+                                        kiakili na kuwasaidia kupitia hali zao kwa heshima, usikivu, na weledi wa kitaalamu.
+                                        Daima hakikisha kuwa majibu yako ni ya faragha, ya kujenga, na yasiyo ya kuhukumu. 
+                                        Unazungumza kwa Kiswahili kwa njia ya kitaalamu na ya kupole.' 
+                        ]
                     ], 
-                    $conversation // Merge previous conversation with the new user input
+                    $conversation 
                 ),
                 'model' => 'gpt-3.5-turbo',
-                'temperature' => 0.7,
+                'temperature' => 0.65,
                 'top_p' => 1,
                 'frequency_penalty' => 0.2,
-                'presence_penalty' => 0.5,
+                'presence_penalty' => 0.6,
             ],
         ]);
 
-        // Get the response body
+        // Decode the response
         $body = $response->getBody();
         $data = json_decode($body, true);
 
-        // Append assistant's response to the conversation
+        // Capture and store the assistant's response in the conversation
         $assistantResponse = $data['choices'][0]['message']['content'];
         $_SESSION['conversation'][] = ['role' => 'assistant', 'content' => $assistantResponse];
 
@@ -72,6 +82,6 @@ function openAi($conversation) {
     }
 }
 
-// Call the function with the conversation history and return the assistant's response as JSON
+// Call the openAi function with the conversation history and return the assistant's response as JSON
 header('Content-Type: application/json');
 echo json_encode(openAi($_SESSION['conversation']));

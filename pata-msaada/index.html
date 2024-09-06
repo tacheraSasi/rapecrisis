@@ -286,7 +286,7 @@ function chatStripe(isAi, value, uniqueId) {
         `
         <div class="ekilie-chat ${isAi ? 'ai' : ''}">
           <div class="role ${isAi ? 'assistant' : 'user'}">${isAi ? 'Magreth' : 'me'}</div>
-          <pre id=${uniqueId}>${value}</pre>
+          <span id=${uniqueId}>${value}</span>
         </div>
     `
     )
