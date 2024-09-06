@@ -28,6 +28,12 @@
   <link href="../assets/css/main.css" rel="stylesheet">
   <link href="../assets/css/style.css" rel="stylesheet">
 
+  <!-- CSS Styles -->
+<style>
+  
+</style>
+
+
 </head> 
 
 <body class="service-details-page">
@@ -60,7 +66,13 @@
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
   
-      <a class="btn-getstarted" href="/">Pata ushauri</a>
+      <a class="btn-getstarted" 
+        href="" 
+        data-bs-toggle="modal" 
+        data-bs-target="#modalDialogScrollable">
+        <i class="bi bi-person-lines-fill"> </i>
+         Mshauri
+      </a>
   
     </div>
   </header>
@@ -187,15 +199,186 @@
         </div>
 
       </div>
+      <!-- chat section -->
+      <button id="ekilie-ai-btn" class="back-to-top d-flex align-items-center justify-content-center" 
+        data-bs-toggle="modal" data-bs-target="#modalDialogScrollable"
+        style="border:none;outline:none;border-radius:50%">
+        <i class="bi bi-robot"></i>
+      </button>
+      <div class="modal fade" id="modalDialogScrollable" tabindex="-1" style="z-index: 9999999999;">
+        <div class="modal-dialog modal-dialog-scrollable">
+          <div class="modal-content card">
+            <div class="modal-header">
+              <h5 class="modal-title">
+                <i class="bi bi-person-lines-fill"></i> Pata Ushauri
+              </h5>
+              <button type="button" class="btn text-warning" data-bs-dismiss="modal" aria-label="Close">X</button>
+            </div>
+            <div class="modal-body" id="ekilie-ai-body">
+              <div id="chat_container">
+                <div class="ekilie-chat ai">
+                  <div class="role assistant">
+                    <span> Magreth</span>
+                  </div>
+                  <span> Mambo, mimi ni magreth, Uko sawa? 🙃🙃 </span>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <form method="post" class="typing-area" id="talk-to-assistant">
+                <input type="text" name="prompt" class="input-field" placeholder="Niambie kilichokukumba" autocomplete="off">
+                <button type="submit" id="send-btn">
+                  <i class="bi bi-send" id="i-send"></i>
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+<script>
+//ai therapist
+const form = document.getElementById("talk-to-assistant");
+const input = document.querySelector(".input-field")
+const sendBtn = document.getElementById("send-btn");
+const itagSend = document.getElementById("i-send");
+const chatContainer = document.querySelector('#chat_container');
+const modalBody = document.querySelector('#ekilie-ai-body')
+const BASE_API_URL = 'https://ekilie.onrender.com'
+console.log(form)
 
-    </section><!-- /Service Details Section -->
+form.onsubmit = (e)=>{
+    e.preventDefault();
+
+}
+
+
+let loadInterval
+
+function loader(element) {
+    element.innerHTML = '<div class="loader"></div>'
+
+    
+}
+function typeText(element, text) {
+    let index = 0
+
+    let interval = setInterval(() => {
+        if (index < text.length) {
+            element.innerHTML += text.charAt(index)
+            index++
+        } else {
+            clearInterval(interval)
+        }
+    }, 20)
+}
+
+function generateUniqueId() {
+    const timestamp = Date.now();
+    const randomNumber = Math.random();
+    const hexadecimalString = randomNumber.toString(16);
+
+    return `id-${timestamp}-${hexadecimalString}`;
+}
+
+
+function chatStripe(isAi, value, uniqueId) {
+    return (
+        `
+        <div class="ekilie-chat ${isAi ? 'ai' : ''}">
+          <div class="role ${isAi ? 'assistant' : 'user'}">${isAi ? 'Magreth' : 'me'}</div>
+          <pre id=${uniqueId}>${value}</pre>
+        </div>
+    `
+    )
+}
+
+const handleSubmit = async (e) => {
+    e.preventDefault();
+    let prompt = input.value;
+    input.value = '';
+
+    // User's chat stripe
+    chatContainer.innerHTML += chatStripe(false, prompt);
+
+    // Bot's chat stripe
+    const uniqueId = generateUniqueId();
+    chatContainer.innerHTML += chatStripe(true, " ", uniqueId);
+
+    modalBody.scrollTop = modalBody.scrollHeight;
+
+    // Specific message div
+    const messageDiv = document.getElementById(uniqueId);
+    loader(messageDiv);
+
+    try {
+        const response = await fetch('../chat.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ prompt: prompt }),
+        });
+
+        clearInterval(loadInterval);
+        messageDiv.innerHTML = " ";
+
+        if (response.ok) {
+            const data = await response.json();
+            const parsedData = data.text.trim(); // Trim any trailing spaces/newlines
+            typeText(messageDiv, parsedData);
+        } else {
+            messageDiv.innerHTML = "Kunashida imetokea jaribu tena baadae  😿 😿";
+        }
+    } catch (error) {
+        console.error("Error:", error);
+        messageDiv.innerHTML = "Kunashida imetokea jaribu tena baadae  😿 😿";
+    }
+};
+
+// sendBtn.addEventListener('click',()=>{
+//     handleSubmit()
+// })
+
+// input.onkeyup = ()=>{
+//     if(input.value != ""){
+//         sendBtn.classList.add("active");
+//         itagSend.classList.add("active");
+//     }else{
+//         sendBtn.classList.remove("active");
+//         itagSend.classList.remove("active");
+//     }
+// }
+
+form.addEventListener('submit', handleSubmit)
+input.addEventListener('keyup', (e) => {
+    if(input.value != ""){
+        sendBtn.classList.add("active");
+        itagSend.classList.add("active");
+    }else{
+        sendBtn.classList.remove("active");
+        itagSend.classList.remove("active");
+    }
+    
+})
+</script>
+
+
+
+    </section>
 
   </main>
 
   
 
-  <!-- Scroll Top -->
-  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+  <a href="#" 
+    style="display: block;" 
+    id="scroll-top" 
+    class="scroll-top d-flex align-items-center justify-content-center"
+    data-bs-toggle="modal" data-bs-target="#modalDialogScrollable"
+    >
+    <i class="bi bi-person-lines-fill"></i>
+  </a>
+
 
   <!-- Preloader -->
   <div id="preloader"></div>
@@ -209,6 +392,7 @@
 
   <!-- Main JS File -->
   <script src="../assets/js/main.js"></script>
+  <!-- <script src="../assets/js/script.js"></script> -->
   <script src="../assets/js/msaada.js"></script>
 
 </body>

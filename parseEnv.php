@@ -8,29 +8,29 @@ function parseEnv($file) {
     $env = [];
 
     foreach ($lines as $line) {
-        // Ignore comments
+        # Ignore comments
         if (strpos(trim($line), '#') === 0) {
             continue;
         }
 
-        // Skip if line is malformed
+        # Skip if line is malformed
         if (!strpos($line, '=')) {
             continue;
         }
 
-        // Separate the key and value
+        # Separate the key and value
         list($key, $value) = explode('=', $line, 2);
         $key = trim($key);
         $value = trim($value);
 
-        // Handle quoted values
+        # Handle quoted values
         if (preg_match('/^"(.*)"$/', $value, $matches)) {
             $value = str_replace('\n', "\n", $matches[1]);
         } elseif (preg_match("/^'(.*)'$/", $value, $matches)) {
             $value = $matches[1];
         }
 
-        // Handle boolean and null values
+        # Handle boolean and null values
         if (strtolower($value) === 'true') {
             $value = true;
         } elseif (strtolower($value) === 'false') {
@@ -39,12 +39,12 @@ function parseEnv($file) {
             $value = null;
         }
 
-        // Handle nested variables
+        # Handling nested variables
         $value = preg_replace_callback('/\$\{(\w+)\}/', function ($matches) use ($env) {
             return isset($env[$matches[1]]) ? $env[$matches[1]] : $matches[0];
         }, $value);
 
-        // Store in the environment and in the array for nested variables
+        # Storing in the environment and in the array for nested variables
         putenv("$key=$value");
         $_ENV[$key] = $value;
         $env[$key] = $value;

@@ -1,3 +1,12 @@
+<?php
+include "config.php";
+#getting the contact information
+$get_contact = mysqli_query($conn,"select * from data");
+$data = mysqli_fetch_array($get_contact);
+$data_hospital = $data["hospital_number"];
+$data_police = $data["police_number"];
+$data_therapist = $data["therapist_number"];
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -42,10 +51,10 @@
   
       <nav id="navmenu" class="navmenu">
         <ul>
-          <li><a href="index.html#home" class="active">Nyumbani</a></li>
-          <li><a href="index.html#kuhusu-sisi">Kuhusu Sisi</a></li>
-          <li><a href="index.html#volunteer">Mchango</a></li>
-          <li><a href="index.html#donate">Toa Msaada</a></li>
+          <li><a href="./#home" class="active">Nyumbani</a></li>
+          <li><a href="./#kuhusu-sisi">Kuhusu Sisi</a></li>
+          <li><a href="./#volunteer">Mchango</a></li>
+          <li><a href="./#donate">Toa Msaada</a></li>
           <li class="dropdown">
             <a href="#"><span>Pata Msaada</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
             <ul>
@@ -85,7 +94,7 @@
           </div>
         </div>
         <div class="wfull" data-aos="fade-up" data-aos-delay="125">
-          <div class="item " id="pata-msaada">
+          <div class="item " id="daktari" number="<?=$data_hospital?>">
             <div class="icon flex-shrink-0">
               <i class="bi bi-telephone"></i>
               <div class="title">

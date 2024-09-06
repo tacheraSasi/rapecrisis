@@ -1,4 +1,9 @@
 <?php
+// Allow from any origin
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: POST, GET, OPTIONS');
+header('Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With');
+header('Content-Type: application/json');
 
 require 'vendor/autoload.php';
 require 'parseEnv.php';
@@ -8,16 +13,27 @@ parseEnv(__DIR__ . '/.env');
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 
-// Retrieving environment variables
-$databaseUrl = getenv('TEST');
-print_r($databaseUrl);
+// Capture user input (from the JavaScript request)
+$userInput = file_get_contents('php://input');
+$userInput = json_decode($userInput, true)['prompt'] ?? "Default prompt here";
 
-$prompt = "HI i need to know why would i ever need reactjs over vanilla";
-$userUniqueId = $_POST['userUniqueId'] ?? 'default_user_id'; // Fallback to a default value if not set
+// Initialize session to store the conversation history
+session_start();
 
+if (!isset($_SESSION['conversation'])) {
+    $_SESSION['conversation'] = [];
+}
 
-function openAi($prompt) {
-    $client = new Client(); // Instantiate GuzzleHttp Client inside the function
+$_SESSION['conversation'][] = ['role' => 'user', 'content' => $userInput];
+
+/**
+ * Function to send a therapeutic prompt to OpenAI and engage in a chat
+ *
+ * @param array $conversation
+ * @return array
+ */
+function openAi($conversation) {
+    $client = new Client();
 
     try {
         // Sending a POST request to the OpenAI API
@@ -27,13 +43,17 @@ function openAi($prompt) {
                 'Content-Type' => 'application/json',
             ],
             'json' => [
-                'messages' => [['role' => 'system', 'content' => $prompt]],
+                'messages' => array_merge(
+                    [
+                        ['role' => 'system', 'content' => 'Wewe ni mtaalamu wa ushauri nasaha...'] // Your system instructions here
+                    ], 
+                    $conversation // Merge previous conversation with the new user input
+                ),
                 'model' => 'gpt-3.5-turbo',
-                'temperature' => 0,
-                'max_tokens' => 1000,
+                'temperature' => 0.7,
                 'top_p' => 1,
-                'frequency_penalty' => 0.5,
-                'presence_penalty' => 0,
+                'frequency_penalty' => 0.2,
+                'presence_penalty' => 0.5,
             ],
         ]);
 
@@ -41,21 +61,17 @@ function openAi($prompt) {
         $body = $response->getBody();
         $data = json_decode($body, true);
 
-        // Output the response (for debugging)
-        $content = $data['choices'][0]['message']['content'];
-        echo '<pre>';
-        var_dump($content);
-        echo '</pre>';
+        // Append assistant's response to the conversation
+        $assistantResponse = $data['choices'][0]['message']['content'];
+        $_SESSION['conversation'][] = ['role' => 'assistant', 'content' => $assistantResponse];
+
+        return ['status' => 'success', 'text' => $assistantResponse];
 
     } catch (RequestException $e) {
-        // Handling errors
-        if ($e->hasResponse()) {
-            echo $e->getResponse()->getBody()->getContents();
-        } else {
-            echo $e->getMessage();
-        }
+        return ['status' => 'error', 'message' => $e->getMessage()];
     }
 }
-  
-// Call the function with the provided prompt
-openAi($prompt);
+
+// Call the function with the conversation history and return the assistant's response as JSON
+header('Content-Type: application/json');
+echo json_encode(openAi($_SESSION['conversation']));

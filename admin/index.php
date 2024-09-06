@@ -61,8 +61,7 @@
   
       <nav id="navmenu" class="navmenu">
         <ul>
-          <li><a href="index.html#home" class="active">Nyumbani</a></li>
-          <li><a href="index.html#donate">Wahudumu</a></li>
+          <li><a href="./" class="active">Nyumbani</a></li>
           <li class="dropdown">
             <a href="#"><span>Pata Msaada</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
             <ul>
@@ -74,7 +73,7 @@
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
   
-      <a class="btn-getstarted text-small" href="/pata-msaada/">Pata Msaada</a>
+      <a class="btn-getstarted text-small" href="edit-data.php">Edit Profile</a>
   
     </div>
   </header>
