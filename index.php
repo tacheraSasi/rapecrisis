@@ -1,5 +1,6 @@
 <?php
 include "config.php";
+
 #getting the contact information
 $get_contact = mysqli_query($conn,"select * from data");
 $data = mysqli_fetch_array($get_contact);

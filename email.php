@@ -29,7 +29,7 @@ if (isset($data['question1']) && isset($data['question2']) && isset($data['quest
     #$email = $user['email'];
 
     $emailSubject = "Taarifa toka TUWK";
-    $to = 'tacherasasi@gmail.com';
+    $to = 'kusagaissa@gmail.com';
 
     // Create HTML message
     $message = '<!DOCTYPE html>
